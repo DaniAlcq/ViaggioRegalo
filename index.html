@@ -57,7 +57,7 @@
           <p id="resultsCount" class="muted" aria-live="polite" style="margin-top:10px"></p>
         </div>
         <div aria-hidden="true">
-          <img class="hero-img" src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1200&auto=format&fit=crop" alt="Aereo in decollo al tramonto" />
+          <img class="hero-img" src="img/Travellers.png" alt="Aereo in decollo al tramonto" />
         </div>
       </div>
     </section>
@@ -85,6 +85,24 @@
       </div>
     </section>
   </main>
+
+  <dialog id="bookDialog">
+    <form method="dialog" class="modal">
+      <h2>Prenotazione</h2>
+      <p id="bookTrip" class="muted"></p>
+      <ul>
+        <li><strong>Destinazione:</strong> <span id="bookCity"></span></li>
+        <li><strong>Date:</strong> <span id="bookDates"></span></li>
+        <li><strong>Partecipanti:</strong> <span id="bookGuests"></span></li>
+      </ul>
+      <p><em>Sei sicuro di voler prenotare questo viaggio?</em></p>
+      <footer style="display:flex; gap:8px; justify-content:flex-end; margin-top:12px">
+        <button class="btn" value="cancel" type="submit">No</button>
+        <button id="confirmBookBtn" class="btn primary" value="yes" type="submit">Sì</button>
+      </footer>
+    </form>
+  </dialog>
+  
 
   <footer class="footer">
     <div class="container footer-grid">
@@ -117,5 +135,12 @@
   
   
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    emailjs.init({ publicKey: "x4PJt8wy7Kn6kY2Qq" }); 
+  });
+</script>
+
 </body>
 </html>

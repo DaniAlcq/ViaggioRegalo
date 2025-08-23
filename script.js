@@ -125,7 +125,8 @@ function renderResults(items) {
         <div class="muted">Valutazione <span class="rating">★ ${it.rating}</span></div>
         <div class="muted"><span class="price">${it.price}</span></div>
         <div style="margin-top:10px; display:flex; gap:8px;">
-          <button class="btn" type="button">Prenota</button>
+          <button class="btn" type="button" data-book="${it.city}">Prenota</button>
+
          <button class="btn ghost" type="button" data-details="${it.city}">Dettagli</button>
         </div>
       </div>`;
@@ -205,4 +206,69 @@ descEl.textContent = offer.description || 'Nessuna descrizione disponibile.';
 
   document.getElementById('detailsDialog').showModal();
 });
+
+
+let currentOffer = null;
+let currentBooking = null;
+
+// apri dialog quando clicchi Prenota
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-book]');
+  if (!btn) return;
+
+  const city = btn.dataset.book;
+  const offer = SAMPLE_OFFERS.find(o => o.city === city);
+  if (!offer) return;
+
+  const andata = document.querySelector('#andata')?.value || '';
+  const ritorno = document.querySelector('#ritorno')?.value || '';
+  const ospiti  = document.querySelector('#ospiti')?.value || '1';
+
+  currentOffer = offer;
+  currentBooking = { andata, ritorno, ospiti };
+
+  document.getElementById('bookCity').textContent = offer.city;
+  document.getElementById('bookDates').textContent = andata && ritorno ? `${andata} → ${ritorno}` : 'non specificate';
+  document.getElementById('bookGuests').textContent = ospiti;
+  document.getElementById('bookTrip').textContent = `Prezzo: ${offer.price} — Rating: ${offer.rating}`;
+
+  document.getElementById('bookDialog').showModal();
+});
+
+
+
+async function sendViaEmailJS(offer, booking) {
+  const templateParams = {
+    to_email: "uno@esempio.it,due@esempio.it", // se lo usi nel template come destinatario
+    email: "dani.lcq@gmail.com",               // mostrato nel footer (facoltativo)
+    city: currentOffer.city,
+    dates: `${currentBooking.andata || '-'} → ${currentBooking.ritorno || '-'}`,
+    guests: currentBooking.ospiti,
+    price: currentOffer.price,                 // es. "Gratis"
+    taxes: "Amarmi",                           // o "€ 0,00" / quello che vuoi
+    total: currentOffer.price,                 // es. "Gratis"
+    img: window.location.origin + "/" + currentOffer.img.replace(/^\.\//, ''),
+    logo: window.location.origin + "/img/Travellers.png"
+  };
+  
+
+  try {
+    await emailjs.send(
+      "service_y3flxfj",   // es. service_abc123
+      "template_9r4kifx",  // es. template_booking
+      templateParams
+    );
+    showToast("Prenotazione inviata via EmailJS!");
+  } catch (err) {
+    console.error(err);
+    showToast("Errore nell'invio della prenotazione", "error");
+  }
+}
+
+// click su "Sì"
+document.getElementById("confirmBookBtn").addEventListener("click", async () => {
+  if (!currentOffer || !currentBooking) return;
+  await sendViaEmailJS(currentOffer, currentBooking);
+});
+
 
