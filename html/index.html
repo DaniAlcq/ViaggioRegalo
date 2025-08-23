@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Il tuo regalo di compleanno • Prenota il tuo prossimo viaggio</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <script src="../js/script.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <nav aria-label="Principale">
+        <a class="logo" href="../html/index.html">
+          <img src="../img/Travellers.png" alt="Il tuo regalo" class="logo-dot">
+        </a>
+        <div class="nav-links">
+          <a href="#destinazioni">Destinazioni</a>
+          <a href="#offerte">Offerte</a>
+          <a href="#assistenza">Assistenza</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <h1>Trova il viaggio perfetto in pochi click</h1>
+          <p>Affrettati o le offerte scadranno!</p>
+
+          <div class="search-card" role="search" aria-label="Cerca e prenota">
+            <form id="searchForm" class="search-grid" autocomplete="off">
+              <div class="field">
+                <label for="destinazione">Destinazione</label>
+                <input id="destinazione" name="destinazione" type="text" placeholder="Es. Miami" />
+              </div>
+              <div class="field">
+                <label for="andata">Andata</label>
+                <input id="andata" name="andata" type="date" required />
+              </div>
+              <div class="field">
+                <label for="ritorno">Ritorno</label>
+                <input id="ritorno" name="ritorno" type="date" required />
+              </div>
+              <div class="field">
+                <label for="ospiti">Ospiti</label>
+                <select id="ospiti" name="ospiti">
+                  <option value="2">io e te</option>
+                </select>
+              </div>
+              <button class="btn search-btn" type="submit">Cerca</button>
+            </form>
+          </div>
+
+          <p id="resultsCount" class="muted" aria-live="polite" style="margin-top:10px"></p>
+        </div>
+        <div aria-hidden="true">
+          <img class="hero-img" src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1200&auto=format&fit=crop" alt="Aereo in decollo al tramonto" />
+        </div>
+      </div>
+    </section>
+
+    <section id="offerte" class="section" aria-labelledby="offers-title">
+      <div class="container">
+        <h2 id="offers-title">Risultati & offerte</h2>
+        <div id="results" class="results" role="list"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container cta">
+        <div class="box">
+          <h3>Scarica l'app</h3>
+          <p class="muted">Offerte esclusive, check-in veloce e assistenza ovunque.</p>
+          <button class="btn" type="button">Ottieni link di download</button>
+        </div>
+        <div class="box">
+          <h3 id="assistenza">Hai bisogno di aiuto?</h3>
+          <p class="muted">Assistenza 24/7 in italiano via chat, email e telefono.</p>
+          <a href="tel:+393890913530" class="btn ghost" id="helpLink">Centro assistenza</a>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <strong>Viaggia</strong>
+        <p class="muted">Prenota voli, hotel e pacchetti in modo sicuro.</p>
+      </div>
+      <div><strong>Scopri</strong><br /><a href="#">Come funziona</a></div>
+      <div><strong>Legale</strong><br /><a href="#">Privacy</a></div>
+      <div>
+        <strong>Preferenze</strong><br />
+        <label class="muted" for="langSel">Lingua</label>
+        <select id="langSel"><option>Italiano</option><option>English</option></select>
+      </div>
+    </div>
+  </footer>
+  <dialog id="detailsDialog">
+    <form method="dialog" class="modal">
+      <h2 id="detailsTitle"></h2>
+      <img id="detailsImg" src="" alt="" style="width:100%;border-radius:8px;margin:12px 0;" />
+      <p id="detailsText"></p>
+      <p id="detailsDesc"></p>
+      <footer>
+        <button class="btn" value="close">Chiudi</button>
+      </footer>
+    </form>
+  </dialog>
+  
+    
+  
+  
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
