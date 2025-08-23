@@ -14,42 +14,42 @@ const SAMPLE_OFFERS = [
     city: 'Crociera Nord Europa', 
     price: "gratis", 
     rating: 4.9, 
-    img: '../img/crociera.jpg', 
+    img: 'img/crociera.jpg', 
     description: 'Un viaggio tra fiordi spettacolari, paesaggi mozzafiato e capitali nordiche ricche di fascino e storia.' 
   },
   { 
     city: 'Instanbul e Cappadocia', 
     price: "gratis", 
     rating: 4.9, 
-    img: '../img/instanbul.jpg',
+    img: 'img/instanbul.jpg',
     description: 'Scopri i bazar colorati di Istanbul e vola in mongolfiera tra le valli uniche della Cappadocia.'
   },
   { 
     city: 'Miami', 
     price: "gratis", 
     rating: 5, 
-    img: '../img/miami.avif',
+    img: 'img/miami.avif',
     description: 'Spiagge infinite, nightlife elettrizzante e un’atmosfera solare tutto l’anno: la magia di Miami ti aspetta.'
   },
   { 
     city: 'Dublino', 
     price: "gratis", 
     rating: 4.6, 
-    img: '../img/dublino.jpg',
+    img: 'img/dublino.jpg',
     description: 'Un mix di pub storici, musica dal vivo e paesaggi verdi: l’Irlanda parte dal cuore di Dublino.'
   },
   { 
     city: 'Amsterdam', 
     price: "gratis", 
     rating: 4.7, 
-    img: '../img/amsterdam.png',
+    img: 'img/amsterdam.png',
     description: 'Canali pittoreschi, musei di fama mondiale e biciclette ovunque: vivi l’atmosfera unica di Amsterdam.'
   },
   { 
     city: 'Stoccolma', 
     price: "gratis", 
     rating: 4.6, 
-    img: '../img/stoccolma.jpg',
+    img: 'img/stoccolma.jpg',
     description: 'La “Venezia del Nord”: un arcipelago incantevole, design moderno e tradizioni svedesi senza tempo.'
   },
   { 
@@ -57,28 +57,28 @@ const SAMPLE_OFFERS = [
     hotel: 'Da decidere', 
     price: "gratis", 
     rating: 4.5, 
-    img: '../img/sevilla.jpg',
+    img: 'img/sevilla.jpg',
     description: 'Flamenco, tapas e la maestosa Giralda: Siviglia è pura passione andalusa.'
   },
   { 
     city: 'Praga', 
     price: "gratis", 
     rating: 4.4, 
-    img: '../img/praga.jpg',
+    img: 'img/praga.jpg',
     description: 'Il ponte Carlo, il castello e birrerie storiche: la città delle cento torri ha un fascino magico.'
   },
   { 
     city: 'Copenhagen', 
     price: "gratis", 
     rating: 4.5, 
-    img: '../img/copenhagen.jpg',
+    img: 'img/copenhagen.jpg',
     description: 'Design scandinavo, hygge e la celebre Sirenetta: una città moderna con il calore nordico.'
   },
   { 
     city: 'Oslo', 
     price: "gratis", 
     rating: 4.3, 
-    img: '../img/oslo.jpg',
+    img: 'img/oslo.jpg',
     description: 'La capitale norvegese tra natura incontaminata e architettura all’avanguardia.'
   },
 ];
