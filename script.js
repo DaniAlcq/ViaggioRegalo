@@ -44,7 +44,7 @@ const SAMPLE_OFFERS = [
 
 // ============ Render card generico ============ //
 // withBadge: false | 'top' | 'new'
-function renderCards(items, containerId = 'results', counterId = 'resultsCount', withBadge = false) {
+function  renderCards(items, containerId = 'results', counterId = 'resultsCount', withBadge = false) {
   const wrap = document.getElementById(containerId);
   const counter = counterId ? document.getElementById(counterId) : null;
   if (!wrap) return;
@@ -116,11 +116,13 @@ function fakeSearch(q) {
   }
   return new Promise(resolve => {
     setTimeout(() => {
-      const term = (q.destinazione || '').toLowerCase();
+      const term = (q.destinazione || '').trim().toLowerCase();
+      if (!term) { resolve([...SAMPLE_OFFERS]); return; } // destinazione vuota → tutte
       resolve(SAMPLE_OFFERS.filter(o => o.city.toLowerCase().includes(term)));
     }, 700);
   });
 }
+
 
 // ============ Init ============ //
 window.addEventListener('load', () => {
@@ -162,15 +164,37 @@ if (form) form.addEventListener('submit', async (e) => {
 
   if (!q.andata || !q.ritorno) { showToast('Seleziona le date'); return; }
 
-  // Nascondi Novità e Top Rated al submit
-  document.getElementById('novita')?.classList.add('hidden');
-  document.getElementById('top-rated')?.classList.add('hidden');
-
+  const term = (q.destinazione || '').trim().toLowerCase();
   const results = await fakeSearch(q);
+
+  // sempre aggiorna i risultati principali
   renderResults(results);
+
+  if (!term) {
+    // DESTINAZIONE VUOTA → mostra di nuovo NOVITÀ e TOP RATED
+    const news = SAMPLE_OFFERS.filter(o => o.isNew === true);
+    if (news.length) {
+      renderCards(news, 'newsResults', 'newsCount', 'new');
+      const nc = $('#newsCount'); if (nc) nc.textContent = `${news.length} novità`;
+    } else {
+      renderCards(SAMPLE_OFFERS.slice(-3), 'newsResults', 'newsCount');
+      const nc = $('#newsCount'); if (nc) nc.textContent = `Novità recenti`;
+    }
+    const topRated = [...SAMPLE_OFFERS].sort((a,b) => b.rating - a.rating || a.city.localeCompare(b.city)).slice(0,3);
+    renderCards(topRated, 'topResults', 'topCount', 'top');
+
+    // rendi visibili le sezioni
+    document.getElementById('novita')?.classList.remove('hidden');
+    document.getElementById('top-rated')?.classList.remove('hidden');
+  } else {
+    // DESTINAZIONE COMPILATA → nascondi NOVITÀ e TOP RATED
+    document.getElementById('novita')?.classList.add('hidden');
+    document.getElementById('top-rated')?.classList.add('hidden');
+  }
 
   showToast(results.length ? 'Ecco le migliori offerte' : 'Nessuna offerta trovata');
 });
+
 
 // ============ Dialog Dettagli ============ //
 document.addEventListener('click', (e) => {
