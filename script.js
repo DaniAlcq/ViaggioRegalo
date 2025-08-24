@@ -296,3 +296,69 @@ bookDlg?.addEventListener('click', (e) => {
   const outside = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
   if (outside) bookDlg.close();
 });
+
+document.getElementById("proposalForm")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const pname = document.getElementById("pname").value.trim();
+  const psurname = document.getElementById("psurname").value.trim();
+  const pdest = document.getElementById("pdest").value.trim();
+  const pemail = document.getElementById("pemail").value.trim();
+
+  const templateParams = {
+    fname: pname,
+    lname: psurname,
+    destination: pdest,
+    uemail: pemail
+  };
+
+  try {
+    await emailjs.send("service_y3flxfj", "template_proposal", templateParams);
+    showToast("Proposta inviata, grazie!");
+    document.getElementById("proposalForm").reset();
+  } catch (err) {
+    console.error(err);
+    showToast("Errore nell'invio della proposta", "error");
+  }
+});
+// === PROPOSTE DESTINAZIONI === //
+const proposalForm = document.getElementById("proposalForm");
+
+if (proposalForm) {
+  proposalForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // raccogli dati dal form
+    const fname = document.getElementById("fname").value.trim();
+    const lname = document.getElementById("lname").value.trim();
+    const uemail = document.getElementById("uemail").value.trim();
+    const destination = document.getElementById("destination").value.trim();
+
+    // controlli minimi
+    if (!fname || !lname || !uemail || !destination) {
+      showToast("Compila tutti i campi", "error");
+      return;
+    }
+
+    // parametri per EmailJS
+    const templateParams = {
+      fname,
+      lname,
+      uemail,
+      destination
+    };
+
+    try {
+      await emailjs.send(
+        "service_y3flxfj",     // <-- il tuo Service ID
+        "template_eeff50b",   // <-- il Template ID che hai creato per le proposte
+        templateParams
+      );
+      showToast("Proposta inviata con successo!");
+      proposalForm.reset(); // pulisce il form
+    } catch (err) {
+      console.error(err);
+      showToast("Errore nell'invio della proposta", "error");
+    }
+  });
+}
