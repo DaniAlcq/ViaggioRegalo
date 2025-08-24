@@ -10,41 +10,46 @@ function showToast(msg, type = 'info') {
 }
 
 // ============ Dati ============ //
-// (ho corretto "instanbul.jpg" in "istanbul.jpg" per sicurezza)
 const SAMPLE_OFFERS = [
-  { city: 'Crociera Nord Europa', price: "gratis", rating: 4.9, img: 'img/crociera.jpg',
+  { city: 'Crociera Nord Europa', price: "Gratis", rating: 4.9, img: 'img/crociera.jpg',
     description: 'Un viaggio tra fiordi spettacolari, paesaggi mozzafiato e capitali nordiche ricche di fascino e storia.' },
-  { city: 'Istanbul e Cappadocia', price: "gratis", rating: 4.9, img: 'img/instanbul.jpg',
+  { city: 'Istanbul e Cappadocia', price: "Gratis", rating: 4.9, img: 'img/instanbul.jpg',
     description: 'Scopri i bazar colorati di Istanbul e vola in mongolfiera tra le valli uniche della Cappadocia.' },
-  { city: 'Miami', price: "gratis", rating: 5.0, img: 'img/miami.avif',
+  { city: 'Miami', price: "Gratis", rating: 5.0, img: 'img/miami.avif',
     description: 'Spiagge infinite, nightlife elettrizzante e un’atmosfera solare tutto l’anno: la magia di Miami ti aspetta.' },
-  { city: 'Dublino', price: "gratis", rating: 4.6, img: 'img/dublino.jpg',
+  { city: 'Dublino', price: "Gratis", rating: 4.6, img: 'img/dublino.jpg',
     description: 'Un mix di pub storici, musica dal vivo e paesaggi verdi: l’Irlanda parte dal cuore di Dublino.' },
-  { city: 'Amsterdam', price: "gratis", rating: 4.7, img: 'img/amsterdam.png',
+  { city: 'Amsterdam', price: "Gratis", rating: 4.7, img: 'img/amsterdam.png',
     description: 'Canali pittoreschi, musei di fama mondiale e biciclette ovunque: vivi l’atmosfera unica di Amsterdam.' },
-  { city: 'Stoccolma', price: "gratis", rating: 4.6, img: 'img/stoccolma.jpg',
+  { city: 'Stoccolma', price: "Gratis", rating: 4.6, img: 'img/stoccolma.jpg',
     description: 'La “Venezia del Nord”: un arcipelago incantevole, design moderno e tradizioni svedesi senza tempo.' },
-  { city: 'Siviglia', hotel: 'Da decidere', price: "gratis", rating: 4.5, img: 'img/sevilla.jpg',
+  { city: 'Siviglia', price: "Gratis", rating: 4.5, img: 'img/sevilla.jpg',
     description: 'Flamenco, tapas e la maestosa Giralda: Siviglia è pura passione andalusa.' },
-  { city: 'Praga', price: "gratis", rating: 4.4, img: 'img/praga.jpg',
+  { city: 'Praga', price: "Gratis", rating: 4.4, img: 'img/praga.jpg',
     description: 'Il ponte Carlo, il castello e birrerie storiche: la città delle cento torri ha un fascino magico.' },
-  { city: 'Copenhagen', price: "gratis", rating: 4.5, img: 'img/copenhagen.jpg',
+  { city: 'Copenhagen', price: "Gratis", rating: 4.5, img: 'img/copenhagen.jpg',
     description: 'Design scandinavo, hygge e la celebre Sirenetta: una città moderna con il calore nordico.' },
-  { city: 'Oslo', price: "gratis", rating: 4.3, img: 'img/oslo.jpg',
+  { city: 'Oslo', price: "Gratis", rating: 4.3, img: 'img/oslo.jpg',
     description: 'La capitale norvegese tra natura incontaminata e architettura all’avanguardia.' },
-  { city: 'Santorini', price: "gratis", rating: 4.6, img: 'img/santorini.jpg',
+  { city: 'Santorini', price: "Gratis", rating: 4.6, img: 'img/santorini.jpg',
     description: 'L’isola più romantica della Grecia, famosa per le case bianche a picco sul mare e tramonti indimenticabili.', isNew: true },
-  { city: 'Edimburgo', price: "gratis", rating: 4.7, img: 'img/edimburgo.avif',
+  { city: 'Edimburgo', price: "Gratis", rating: 4.7, img: 'img/edimburgo.avif',
     description: 'Capitale della Scozia, con un castello imponente, vicoli medievali e festival culturali di fama mondiale.', isNew: true },
-  { city: 'Bruges', price: "gratis", rating: 4.5, img: 'img/bruges.jpg',
+  { city: 'Bruges', price: "Gratis", rating: 4.5, img: 'img/bruges.jpg',
     description: 'Una città fiabesca del Belgio, con canali romantici, architettura medievale e atmosfere pittoresche.', isNew: true },
-  { city: 'Madeira', price: "gratis", rating: 4.7, img: 'img/madeira.jpg',
+  { city: 'Madeira', price: "Gratis", rating: 4.7, img: 'img/madeira.jpg',
     description: 'Isola portoghese nel cuore dell’Atlantico, tra montagne verdi, sentieri panoramici e mare cristallino.', isNew: true }
 ];
 
-// ============ Render card generico ============ //
-// withBadge: false | 'top' | 'new'
-function  renderCards(items, containerId = 'results', counterId = 'resultsCount', withBadge = false) {
+// ============ Utility Top Rated (globali) ============ //
+function getTopRated(items, n = 3) {
+  return [...items].sort((a,b) => b.rating - a.rating || a.city.localeCompare(b.city)).slice(0, n);
+}
+const GLOBAL_TOP = getTopRated(SAMPLE_OFFERS, 3);
+const isTopCity = (city) => GLOBAL_TOP.some(t => t.city === city);
+
+// ============ Render Cards ============ //
+function renderCards(items, containerId = 'results', counterId = 'resultsCount', withBadge = false) {
   const wrap = document.getElementById(containerId);
   const counter = counterId ? document.getElementById(counterId) : null;
   if (!wrap) return;
@@ -79,12 +84,13 @@ function  renderCards(items, containerId = 'results', counterId = 'resultsCount'
   wrap.appendChild(frag);
 }
 
-// wrapper per i risultati principali
+// Risultati principali: escludi SEMPRE le top rated globali
 function renderResults(items) {
-  renderCards(items, 'results', 'resultsCount');
+  const filtered = items.filter(it => !isTopCity(it.city));
+  renderCards(filtered, 'results', 'resultsCount');
 }
 
-// ============ Date (allineate agli ID reali: #andata/#ritorno) ============ //
+// ============ Date Picker ============ //
 function setMinDates() {
   const inEl = $('#andata');
   const outEl = $('#ritorno');
@@ -117,42 +123,34 @@ function fakeSearch(q) {
   return new Promise(resolve => {
     setTimeout(() => {
       const term = (q.destinazione || '').trim().toLowerCase();
-      if (!term) { resolve([...SAMPLE_OFFERS]); return; } // destinazione vuota → tutte
+      if (!term) { resolve([...SAMPLE_OFFERS]); return; }
       resolve(SAMPLE_OFFERS.filter(o => o.city.toLowerCase().includes(term)));
     }, 700);
   });
 }
-
 
 // ============ Init ============ //
 window.addEventListener('load', () => {
   setMinDates();
   ensureCheckoutAfterCheckin();
 
-  // Risultati iniziali
+  // Risultati iniziali (senza le top rated)
   const initial = SAMPLE_OFFERS.slice(0, 10);
   renderResults(initial);
 
-  // NOVITÀ: offerte con isNew:true (se mancano, fallback ultime 3)
+  // Novità (solo isNew)
   const news = SAMPLE_OFFERS.filter(o => o.isNew === true);
-  const newsWrap = document.getElementById('novita');
   if (news.length) {
     renderCards(news, 'newsResults', 'newsCount', 'new');
-    const nc = document.getElementById('newsCount'); if (nc) nc.textContent = `${news.length} novità`;
-    newsWrap?.classList.remove('hidden');
-  } else {
-    renderCards(initial.slice(-3), 'newsResults', 'newsCount');
-    const nc = document.getElementById('newsCount'); if (nc) nc.textContent = `Novità recenti`;
-    newsWrap?.classList.remove('hidden');
+    const nc = $('#newsCount'); if (nc) nc.textContent = `${news.length} novità`;
+    $('#novita')?.classList.remove('hidden');
   }
 
-  // TOP RATED: top 3 per rating, con badge ★ Top
-  const topRated = [...SAMPLE_OFFERS].sort((a,b) => b.rating - a.rating || a.city.localeCompare(b.city)).slice(0,3);
-  renderCards(topRated, 'topResults', 'topCount', 'top');
-  document.getElementById('top-rated')?.classList.remove('hidden');
+  // Top Rated (globali)
+  renderCards(GLOBAL_TOP, 'topResults', 'topCount', 'top');
+  $('#top-rated')?.classList.remove('hidden');
 });
 
-// aggiorna min checkout se cambia l'andata
 $('#andata')?.addEventListener('change', ensureCheckoutAfterCheckin);
 
 // ============ Submit ricerca ============ //
@@ -167,12 +165,12 @@ if (form) form.addEventListener('submit', async (e) => {
   const term = (q.destinazione || '').trim().toLowerCase();
   const results = await fakeSearch(q);
 
-  // sempre aggiorna i risultati principali
+  // Risultati (sempre senza top rated)
   renderResults(results);
 
   if (!term) {
-    // DESTINAZIONE VUOTA → mostra di nuovo NOVITÀ e TOP RATED
-    const news = SAMPLE_OFFERS.filter(o => o.isNew === true);
+    // destinazione vuota → mostra Novità e Top Rated
+    const news = SAMPLE_OFFERS.filter(o => o.isNew);
     if (news.length) {
       renderCards(news, 'newsResults', 'newsCount', 'new');
       const nc = $('#newsCount'); if (nc) nc.textContent = `${news.length} novità`;
@@ -180,21 +178,17 @@ if (form) form.addEventListener('submit', async (e) => {
       renderCards(SAMPLE_OFFERS.slice(-3), 'newsResults', 'newsCount');
       const nc = $('#newsCount'); if (nc) nc.textContent = `Novità recenti`;
     }
-    const topRated = [...SAMPLE_OFFERS].sort((a,b) => b.rating - a.rating || a.city.localeCompare(b.city)).slice(0,3);
-    renderCards(topRated, 'topResults', 'topCount', 'top');
-
-    // rendi visibili le sezioni
-    document.getElementById('novita')?.classList.remove('hidden');
-    document.getElementById('top-rated')?.classList.remove('hidden');
+    renderCards(GLOBAL_TOP, 'topResults', 'topCount', 'top');
+    $('#novita')?.classList.remove('hidden');
+    $('#top-rated')?.classList.remove('hidden');
   } else {
-    // DESTINAZIONE COMPILATA → nascondi NOVITÀ e TOP RATED
-    document.getElementById('novita')?.classList.add('hidden');
-    document.getElementById('top-rated')?.classList.add('hidden');
+    // destinazione compilata → nascondi sezioni extra
+    $('#novita')?.classList.add('hidden');
+    $('#top-rated')?.classList.add('hidden');
   }
 
   showToast(results.length ? 'Ecco le migliori offerte' : 'Nessuna offerta trovata');
 });
-
 
 // ============ Dialog Dettagli ============ //
 document.addEventListener('click', (e) => {
@@ -205,27 +199,21 @@ document.addEventListener('click', (e) => {
   const offer = SAMPLE_OFFERS.find(o => o.city === city);
   if (!offer) return;
 
-  // Titolo centrato
   $('#detailsTitle').innerHTML = `<div style="text-align:center;">${offer.city}</div>`;
-
-  // Immagine
   const imgEl = $('#detailsImg');
   imgEl.src = offer.img;
   imgEl.alt = `Foto di ${offer.city}`;
 
-  // Prezzo/Rating centrati + bold
   $('#detailsText').innerHTML =
     `<div style="text-align:center;">
        <strong>Prezzo:</strong> ${offer.price} — <strong>Rating:</strong> ${offer.rating}
      </div>`;
 
-  // Descrizione
   $('#detailsDesc').textContent = offer.description || 'Nessuna descrizione disponibile.';
-
   $('#detailsDialog').showModal();
 });
 
-// ============ Dialog Prenota + EmailJS ============ //
+// ============ Prenotazione + EmailJS ============ //
 let currentOffer = null;
 let currentBooking = null;
 
@@ -252,41 +240,56 @@ document.addEventListener('click', (e) => {
   $('#bookDialog').showModal();
 });
 
-// costruisce URL assoluti per img/logo (funziona su GitHub Pages)
+// URL assoluti (utile su GitHub Pages)
 function absoluteUrl(path) {
   try { return new URL(path, document.baseURI).href; }
   catch { return path; }
 }
 
-async function sendViaEmailJS(offer, booking) {
+// EmailJS invio
+async function sendViaEmailJS(offer, booking, user) {
   const templateParams = {
-    to_email: "uno@esempio.it,due@esempio.it", // ← metti i tuoi indirizzi
-    email: "dani.lcq@gmail.com",
+    to_email: user.uemail, // destinatario dinamico (se il tuo template lo permette)
+    fname: user.fname,
+    lname: user.lname,
+    uemail: user.uemail,
     city: offer.city,
     dates: `${booking.andata || '-'} → ${booking.ritorno || '-'}`,
     guests: booking.ospiti,
     price: offer.price,
-    taxes: "Amarmi",                  // personalizza
-    total: offer.price,
     img: absoluteUrl(offer.img),
     logo: absoluteUrl("img/Travellers.png")
   };
 
   try {
     await emailjs.send("service_y3flxfj", "template_9r4kifx", templateParams);
-    showToast("Prenotazione inviata via EmailJS!");
+    showToast("Prenotazione inviata!");
   } catch (err) {
     console.error(err);
     showToast("Errore nell'invio della prenotazione", "error");
   }
 }
 
-$('#confirmBookBtn')?.addEventListener('click', async () => {
-  if (!currentOffer || !currentBooking) return;
-  await sendViaEmailJS(currentOffer, currentBooking);
+// Click su "Sì" → apri form utente
+$('#confirmBookBtn')?.addEventListener('click', () => {
+  $('#bookDialog').close();
+  $('#userFormDialog').showModal();
 });
 
-// (opzionale) chiudi il dialog Prenota cliccando fuori
+// Submit form utente
+$('#userForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!currentOffer || !currentBooking) return;
+
+  const fname = $('#fname').value.trim();
+  const lname = $('#lname').value.trim();
+  const uemail = $('#uemail').value.trim();
+
+  await sendViaEmailJS(currentOffer, currentBooking, { fname, lname, uemail });
+  $('#userFormDialog').close();
+});
+
+// Chiudi bookDialog clic fuori
 const bookDlg = $('#bookDialog');
 bookDlg?.addEventListener('click', (e) => {
   const r = bookDlg.getBoundingClientRect();

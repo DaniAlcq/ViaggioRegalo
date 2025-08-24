@@ -226,6 +226,21 @@
   border-radius: 6px;
   background: #2e7d32; /
 }
+.card { position: relative; }
+
+.badge-top,
+.badge-new {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.badge-top { background: gold; color: #111; }
+.badge-new { background: #2e7d32; color: #fff; }
 
 
 

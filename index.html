@@ -118,6 +118,29 @@
     </form>
   </dialog>
   
+  <dialog id="userFormDialog">
+    <form method="dialog" class="modal" id="userForm">
+      <h2>Inserisci i tuoi dati</h2>
+      <div class="field">
+        <label for="fname">Nome</label>
+        <input type="text" id="fname" name="fname" required>
+      </div>
+      <div class="field">
+        <label for="lname">Cognome</label>
+        <input type="text" id="lname" name="lname" required>
+      </div>
+      <div class="field">
+        <label for="uemail">Email</label>
+        <input type="email" id="uemail" name="uemail" required>
+      </div>
+  
+      <footer style="margin-top:16px; display:flex; gap:8px; justify-content:flex-end;">
+        <button type="submit" class="btn">Invia prenotazione</button>
+        <button type="button" class="btn ghost" onclick="document.getElementById('userFormDialog').close()">Annulla</button>
+      </footer>
+    </form>
+  </dialog>
+  
 
   <footer class="footer">
     <div class="container footer-grid">
