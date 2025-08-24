@@ -242,6 +242,19 @@
 .badge-top { background: gold; color: #111; }
 .badge-new { background: #2e7d32; color: #fff; }
 
+.proposal-form .field label {
+  display: block;        /* forza l'etichetta sopra l'input */
+  margin-top: 12px;      /* spazio sopra ogni label */
+  margin-bottom: 4px;    /* piccolo spazio sotto prima dell’input */
+  font-weight: 600;      /* opzionale: rendi il titolo più leggibile */
+}
+
+.proposal-form button[type="submit"] {
+  margin-top: 20px;      /* spazio extra sopra il bottone */
+  display: block;        /* fa sì che occupi tutta la riga */
+  margin-left: auto;     /* lo centra */
+  margin-right: auto;    /* lo centra */
+}
 
 
   
