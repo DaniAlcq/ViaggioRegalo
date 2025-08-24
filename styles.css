@@ -122,4 +122,62 @@
     max-height: 250px;
     object-fit: cover;
   }
+  .news-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .news-list li {
+    margin-bottom: 8px;
+    padding: 10px 14px;
+    background: var(--bg-soft);
+    border-radius: 8px;
+    font-size: 0.95rem;
+  }
+  .news-list li strong {
+    color: var(--accent, #2e7d32);
+  }
+  .hidden {
+    display: none !important;
+  }
+  .section h2,
+.section p.muted {
+  text-align: center;
+}
+
+.card {
+  position: relative; /* serve per ancorare i badge */
+}
+
+.badge-top {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: gold;
+  color: #111;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.badge-new {
+  position: absolute;
+  height: 30px;
+  width: 60px;
+  align-content: center;
+  text-align: center;
+  bottom: 8px;   /* in basso */
+  right: 8px;    /* a destra */
+  font-size: 14px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #2e7d32; /
+}
+
+
+
+  
     

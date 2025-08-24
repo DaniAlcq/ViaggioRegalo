@@ -53,8 +53,6 @@
               <button class="btn search-btn" type="submit">Cerca</button>
             </form>
           </div>
-
-          <p id="resultsCount" class="muted" aria-live="polite" style="margin-top:10px"></p>
         </div>
         <div aria-hidden="true">
           <img class="hero-img" src="img/Travellers.png" alt="Aereo in decollo al tramonto" />
@@ -62,9 +60,27 @@
       </div>
     </section>
 
+    <section id="novita" class="section" aria-labelledby="news-title">
+      <div class="container">
+        <h2 id="news-title" class="nov">Novità</h2>
+        <p id="newsCount" class="muted" aria-live="polite" style="margin:6px 0 12px"></p>
+        <div id="newsResults" class="results" role="list"></div>
+      </div>
+    </section>
+    
+    <section id="top-rated" class="section" aria-labelledby="top-title">
+      <div class="container">
+        <h2 id="top-title">Top Rated</h2>
+        <p id="topCount" class="muted" aria-live="polite" style="margin:6px 0 12px"></p>
+        <div id="topResults" class="results" role="list"></div>
+      </div>
+    </section>
+    
+
     <section id="offerte" class="section" aria-labelledby="offers-title">
       <div class="container">
         <h2 id="offers-title">Risultati & offerte</h2>
+        <p id="resultsCount" class="muted" aria-live="polite" style="margin-top:10px"></p>
         <div id="results" class="results" role="list"></div>
       </div>
     </section>
